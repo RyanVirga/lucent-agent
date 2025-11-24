@@ -1,0 +1,9 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/transaction-emails",
+      "schedule": "0 9 * * *"
+    }
+  ]
+}
+
