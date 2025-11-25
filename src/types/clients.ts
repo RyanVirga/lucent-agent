@@ -1,6 +1,9 @@
 // Domain types for Agent Clients Portal UI
 import type { Deal, DealStatus, DealSide, DealMilestone, DealTask, Note, Alert, DocPacketDocument, Property, Client, PortalInvite } from './database'
 
+// Re-export commonly used types from database
+export type { DealStatus, DealSide }
+
 export interface ClientWithDeals {
   client: Client
   deals: DealSummary[]
