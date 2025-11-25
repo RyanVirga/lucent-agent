@@ -5,6 +5,9 @@ import { fetchAgentClientsWithDeals } from '@/server/db/clients'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
+// Force dynamic rendering since this page requires authentication
+export const dynamic = 'force-dynamic'
+
 export default async function NewDealPage() {
   const { teamId, profileId } = await getCurrentAgentContext()
   

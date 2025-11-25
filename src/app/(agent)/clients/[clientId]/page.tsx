@@ -4,6 +4,9 @@ import { ClientTabs } from '@/components/clients/ClientTabs'
 import { getCurrentAgentContext } from '@/lib/auth'
 import { fetchClientDetail } from '@/server/db/clients'
 
+// Force dynamic rendering since this page requires authentication
+export const dynamic = 'force-dynamic'
+
 interface ClientDetailPageProps {
   params: Promise<{ clientId: string }>
 }

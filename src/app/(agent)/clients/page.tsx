@@ -8,6 +8,9 @@ import { getCurrentAgentContext } from '@/lib/auth'
 import { fetchAgentClientsWithDeals } from '@/server/db/clients'
 import type { ClientFilters, DealStatus, DealSide } from '@/types/clients'
 
+// Force dynamic rendering since this page requires authentication
+export const dynamic = 'force-dynamic'
+
 interface ClientsPageProps {
   searchParams: Promise<{
     search?: string
