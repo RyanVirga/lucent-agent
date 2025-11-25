@@ -1,10 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY!
+// Default to placeholders during build if env vars are missing
+// This prevents build crashes, but will fail at runtime if not configured
+const supabaseUrl = process.env.SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || 'placeholder'
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'placeholder'
 
-if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase environment variables')
+const isConfigured = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY
+
+if (!isConfigured && process.env.NODE_ENV === 'production') {
+  console.warn('Supabase environment variables missing in production build')
 }
 
 // Server-side Supabase client with service role key
@@ -17,7 +22,6 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 })
 
 // Client-side Supabase client (for future use)
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!
-
 export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey)
+
 
