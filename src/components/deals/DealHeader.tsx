@@ -1,12 +1,6 @@
 'use client'
 
-interface Deal {
-  id: string
-  property_address: string
-  side: 'buying' | 'listing'
-  status: string
-  coe_date: string | null
-}
+import type { Deal } from '@/types/database'
 
 interface DealHeaderProps {
   deal: Deal
