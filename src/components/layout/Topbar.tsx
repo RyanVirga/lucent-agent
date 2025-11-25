@@ -18,7 +18,7 @@ export function Topbar({ firstName }: { firstName?: string }) {
             {greeting}, {displayName}
           </h2>
           <p className="text-sm text-text-secondary font-medium">
-            Here's what Lucent is coordinating for you today
+            Here&apos;s what Lucent is coordinating for you today
           </p>
         </div>
       </div>

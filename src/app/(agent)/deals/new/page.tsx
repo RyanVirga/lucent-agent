@@ -30,7 +30,7 @@ export default async function NewDealPage() {
           </Link>
           <div>
             <h1 className="text-2xl font-bold text-text-primary">Create New Deal</h1>
-            <p className="text-text-secondary text-sm">Start a new transaction for an existing client.</p>
+            <p className="text-sm text-text-secondary mt-1">Start a new transaction for an existing client.</p>
           </div>
         </div>
 

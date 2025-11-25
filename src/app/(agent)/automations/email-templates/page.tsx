@@ -8,6 +8,7 @@ import { EmailTemplateEditor } from '@/components/automation/EmailTemplateEditor
 import { Mail, Plus, Filter, LayoutGrid, List as ListIcon } from 'lucide-react'
 import type { EmailTemplate, AudienceType } from '@/types/database'
 import { getEmailTemplates } from './actions'
+import { Button } from '@/components/ui/Button'
 
 export default function EmailTemplatesPage() {
   const [templates, setTemplates] = useState<EmailTemplate[]>([])
@@ -79,39 +80,38 @@ export default function EmailTemplatesPage() {
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-text-primary flex items-center gap-2">
               Email Templates
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-text-secondary mt-1">
               Manage and preview your automated email templates
             </p>
           </div>
           <div className="flex items-center gap-3">
-             <div className="flex items-center bg-white border border-gray-200 rounded-lg p-1">
-              <button
+             <div className="flex items-center bg-white border border-border rounded-xl p-1">
+              <Button
+                variant={view === 'list' ? 'secondary' : 'ghost'}
+                size="icon"
                 onClick={() => setView('list')}
-                className={`p-1.5 rounded-md transition-colors ${
-                  view === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900'
-                }`}
+                className={`w-8 h-8 rounded-lg ${view === 'list' ? 'bg-gray-100' : ''} border-none shadow-none`}
               >
                 <ListIcon className="w-4 h-4" />
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={view === 'grid' ? 'secondary' : 'ghost'}
+                size="icon"
                 onClick={() => setView('grid')}
-                className={`p-1.5 rounded-md transition-colors ${
-                  view === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900'
-                }`}
+                className={`w-8 h-8 rounded-lg ${view === 'grid' ? 'bg-gray-100' : ''} border-none shadow-none`}
               >
                 <LayoutGrid className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
-            <button 
+            <Button
               onClick={handleNewTemplate}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors shadow-sm"
+              leftIcon={<Plus className="w-4 h-4" />}
             >
-              <Plus className="w-4 h-4" />
               New Template
-            </button>
+            </Button>
           </div>
         </div>
 

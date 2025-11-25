@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Search, X, ChevronDown, Check, Filter } from 'lucide-react'
 import type { DealStatus, DealSide } from '@/types/database'
+import { Button } from '@/components/ui/Button'
 
 interface FilterOption {
   value: string
@@ -243,13 +244,15 @@ export function ClientsFilterBar() {
           {hasActiveFilters && (
             <div className="flex items-center gap-2 ml-auto">
               <div className="h-4 w-px bg-border mx-2 hidden md:block"></div>
-              <button
+              <Button
                 onClick={clearFilters}
-                className="text-sm text-text-muted hover:text-red-600 transition-colors flex items-center gap-1"
+                variant="ghost"
+                size="sm"
+                className="text-text-muted hover:text-red-600 hover:bg-red-50"
+                leftIcon={<X className="w-3 h-3" />}
               >
-                <X className="w-3 h-3" />
                 Clear
-              </button>
+              </Button>
             </div>
           )}
         </div>

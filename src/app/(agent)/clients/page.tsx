@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
-import Link from 'next/link'
 import { Plus } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { ClientsFilterBar } from '@/components/clients/ClientsFilterBar'
 import { ClientsTable } from '@/components/clients/ClientsTable'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { getCurrentAgentContext } from '@/lib/auth'
 import { fetchAgentClientsWithDeals } from '@/server/db/clients'
 import type { ClientFilters, DealStatus, DealSide } from '@/types/clients'
@@ -54,16 +54,15 @@ export default async function ClientsPage({ searchParams }: ClientsPageProps) {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-text-primary mb-2">Clients</h1>
-              <p className="text-text-secondary">Manage your clients and their transactions</p>
+              <h1 className="text-2xl font-bold text-text-primary">Clients</h1>
+              <p className="text-sm text-text-secondary mt-1">Manage your clients and their transactions</p>
             </div>
-            <Link
+            <ButtonLink
               href="/clients/new"
-              className="flex items-center gap-2 px-6 py-2.5 bg-accent hover:bg-accent-dark text-white rounded-xl font-medium shadow-lg shadow-accent/20 transition-all"
+              leftIcon={<Plus className="w-4 h-4" />}
             >
-              <Plus className="w-5 h-5" />
               New Client
-            </Link>
+            </ButtonLink>
           </div>
 
           <Suspense fallback={<div className="animate-pulse bg-gray-100 h-64 rounded-2xl"></div>}>

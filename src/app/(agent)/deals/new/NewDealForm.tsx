@@ -5,6 +5,8 @@ import { createDeal } from './actions'
 import { ArrowLeft, Building2, Calendar, DollarSign, FileText, CheckCircle2, User, Home, ArrowUpRight, ArrowDownLeft, Check } from 'lucide-react'
 import Link from 'next/link'
 import type { Client } from '@/types/database'
+import { Button } from '@/components/ui/Button'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 
 interface NewDealFormProps {
   clients: Client[]
@@ -37,12 +39,13 @@ export function NewDealForm({ clients }: NewDealFormProps) {
               <p className="text-sm text-text-secondary">Who is this deal for?</p>
             </div>
           </div>
-          <Link 
+          <ButtonLink 
             href="/clients/new" 
-            className="text-sm px-4 py-2 bg-gray-50 text-text-primary rounded-lg font-medium hover:bg-gray-100 transition-colors border border-border/50"
+            variant="secondary"
+            size="sm"
           >
             + Create New Client
-          </Link>
+          </ButtonLink>
         </div>
 
         <div className="space-y-3">
@@ -239,26 +242,22 @@ export function NewDealForm({ clients }: NewDealFormProps) {
       {/* Footer Action */}
       <div className="sticky bottom-4 z-10 flex items-center justify-end gap-4 pt-4 pb-4">
         <div className="absolute inset-0 bg-white/80 backdrop-blur-sm -z-10 rounded-2xl shadow-lg border border-white/20" />
-        <Link 
+        <ButtonLink 
           href="/dashboard"
-          className="px-6 py-3 text-text-secondary hover:bg-gray-100/80 rounded-xl font-medium transition-colors"
+          variant="ghost"
+          size="lg"
         >
           Cancel
-        </Link>
-        <button
+        </ButtonLink>
+        <Button
           type="submit"
           disabled={isPending}
-          className="px-10 py-3 bg-accent hover:bg-accent-dark text-white rounded-xl font-medium shadow-xl shadow-accent/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transform active:scale-95"
+          isLoading={isPending}
+          size="lg"
+          className="px-10"
         >
-          {isPending ? (
-            <>
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Creating Deal...
-            </>
-          ) : (
-            'Create Deal'
-          )}
-        </button>
+          Create Deal
+        </Button>
       </div>
     </form>
   )

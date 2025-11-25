@@ -5,6 +5,7 @@ import { ChevronDown, Mail, Phone, Globe, CheckCircle2, Clock, AlertCircle } fro
 import type { ClientDetail } from '@/types/clients'
 import { getDealSideLabel, getSideColor, getDealStatusLabel, getStatusColor } from '@/lib/status-mapping'
 import type { DealStatus } from '@/types/database'
+import { Button } from '@/components/ui/Button'
 
 interface ClientHeaderProps {
   clientDetail: ClientDetail
@@ -289,4 +290,3 @@ export function ClientHeader({ clientDetail }: ClientHeaderProps) {
     </div>
   )
 }
-

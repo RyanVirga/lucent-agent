@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { CheckCircle2, Circle, Plus, X } from 'lucide-react'
 import type { ClientTask } from '@/types/clients'
+import { Button } from '@/components/ui/Button'
 
 interface ClientTasksTabProps {
   clientId: string
@@ -25,11 +26,7 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
     is_internal: false,
   })
 
-  useEffect(() => {
-    fetchTasks()
-  }, [clientId])
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const response = await fetch(`/api/agent/clients/${clientId}/tasks`)
       if (!response.ok) throw new Error('Failed to fetch tasks')
@@ -40,7 +37,11 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [clientId])
+
+  useEffect(() => {
+    fetchTasks()
+  }, [fetchTasks])
 
   const handleToggleTask = async (taskId: string, completed: boolean) => {
     try {
@@ -110,7 +111,7 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
       <div className="flex items-start gap-3 p-4 bg-white rounded-xl border border-border/50 hover:shadow-md transition-all">
         <button
           onClick={() => handleToggleTask(task.task.id, isCompleted)}
-          className="mt-0.5 flex-shrink-0"
+          className="mt-0.5 flex-shrink-0 focus:outline-none"
         >
           {isCompleted ? (
             <CheckCircle2 className="w-5 h-5 text-green-500" />
@@ -148,7 +149,7 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
             <h3 className="text-lg font-semibold text-text-primary">Create New Task</h3>
             <button
               onClick={() => setShowCreateForm(false)}
-              className="text-text-secondary hover:text-text-primary"
+              className="text-text-secondary hover:text-text-primary focus:outline-none"
             >
               <X className="w-5 h-5" />
             </button>
@@ -218,20 +219,20 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
               </label>
             </div>
             <div className="flex gap-3">
-              <button
+              <Button
                 type="submit"
                 disabled={creating}
-                className="px-4 py-2 bg-accent text-white rounded-lg font-medium hover:bg-accent-dark disabled:opacity-50"
+                isLoading={creating}
               >
                 {creating ? 'Creating...' : 'Create Task'}
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant="secondary"
                 onClick={() => setShowCreateForm(false)}
-                className="px-4 py-2 border border-border rounded-lg font-medium text-text-secondary hover:bg-gray-50"
               >
                 Cancel
-              </button>
+              </Button>
             </div>
           </form>
         </div>
@@ -239,13 +240,12 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
 
       {/* Create Task Button */}
       {!showCreateForm && (
-        <button
+        <Button
           onClick={() => setShowCreateForm(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-lg font-medium hover:bg-accent-dark"
+          leftIcon={<Plus className="w-5 h-5" />}
         >
-          <Plus className="w-5 h-5" />
           Create Task
-        </button>
+        </Button>
       )}
 
       {/* Overdue Tasks */}
@@ -298,4 +298,3 @@ export function ClientTasksTab({ clientId }: ClientTasksTabProps) {
     </div>
   )
 }
-

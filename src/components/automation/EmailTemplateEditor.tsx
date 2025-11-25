@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react'
 import { Save, X, Info, AlertCircle } from 'lucide-react'
 import type { EmailTemplate, AudienceType, DealSide } from '@/types/database'
 import { createEmailTemplate, updateEmailTemplate } from '@/app/(agent)/automations/email-templates/actions'
+import { Button } from '@/components/ui/Button'
 
 interface EmailTemplateEditorProps {
   template?: EmailTemplate | null
@@ -113,12 +114,13 @@ export function EmailTemplateEditor({ template, onSave, onCancel }: EmailTemplat
             {isEditing ? 'Update template details below' : 'Define a new email template for workflows'}
           </p>
         </div>
-        <button
+        <Button
           onClick={onCancel}
-          className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+          variant="ghost"
+          size="icon"
         >
           <X className="w-5 h-5" />
-        </button>
+        </Button>
       </div>
 
       {/* Form */}
@@ -294,25 +296,24 @@ export function EmailTemplateEditor({ template, onSave, onCancel }: EmailTemplat
 
         {/* Action Buttons */}
         <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             disabled={isPending}
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg font-medium text-sm hover:bg-gray-800 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            isLoading={isPending}
             disabled={isPending}
+            leftIcon={<Save className="w-4 h-4" />}
           >
-            <Save className="w-4 h-4" />
-            {isPending ? 'Saving...' : isEditing ? 'Update Template' : 'Create Template'}
-          </button>
+            {isEditing ? 'Update Template' : 'Create Template'}
+          </Button>
         </div>
       </form>
     </div>
   )
 }
-

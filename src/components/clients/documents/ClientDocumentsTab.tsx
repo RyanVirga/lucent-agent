@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { FileText, ExternalLink } from 'lucide-react'
 import type { ClientDocument } from '@/types/clients'
 
@@ -12,11 +12,7 @@ export function ClientDocumentsTab({ clientId }: ClientDocumentsTabProps) {
   const [documents, setDocuments] = useState<ClientDocument[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchDocuments()
-  }, [clientId])
-
-  const fetchDocuments = async () => {
+  const fetchDocuments = useCallback(async () => {
     try {
       const response = await fetch(`/api/agent/clients/${clientId}/documents`)
       if (!response.ok) throw new Error('Failed to fetch documents')
@@ -27,7 +23,11 @@ export function ClientDocumentsTab({ clientId }: ClientDocumentsTabProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [clientId])
+
+  useEffect(() => {
+    fetchDocuments()
+  }, [fetchDocuments])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {

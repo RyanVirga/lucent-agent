@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { AppShell } from '@/components/layout/AppShell'
 import { ActiveDealsCard } from '@/components/dashboard/ActiveDealsCard'
 import { NextActionsCard } from '@/components/dashboard/NextActionsCard'
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
-import { BarChart3, CheckCircle2, AlertTriangle, Target } from 'lucide-react'
+import { BarChart3, CheckCircle2, AlertTriangle, Target, Plus } from 'lucide-react'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import type { DashboardResponse } from '@/types/workflows'
 
 export default function DashboardPage() {
@@ -112,11 +112,14 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-text-primary">Dashboard</h1>
-            <p className="text-text-secondary mt-1">Overview of your active deals and tasks</p>
+            <p className="text-sm text-text-secondary mt-1">Overview of your active deals and tasks</p>
           </div>
-          <Link href="/deals/new" className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-accent-dark transition-colors shadow-sm">
-            + New Deal
-          </Link>
+          <ButtonLink 
+            href="/deals/new" 
+            leftIcon={<Plus className="w-4 h-4" />}
+          >
+            New Deal
+          </ButtonLink>
         </div>
 
         {/* Stats Grid */}

@@ -4,7 +4,8 @@ import { useActionState, useState } from 'react'
 import { AppShell } from '@/components/layout/AppShell'
 import { createClient } from './actions'
 import { ArrowLeft, User, Home, Briefcase, CheckCircle2 } from 'lucide-react'
-import Link from 'next/link'
+import { Button } from '@/components/ui/Button'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 
 export default function NewClientPage() {
   const [state, action, isPending] = useActionState(createClient, {})
@@ -16,15 +17,17 @@ export default function NewClientPage() {
       <div className="max-w-3xl mx-auto pb-20">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Link 
+          <ButtonLink 
             href="/clients" 
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-text-secondary"
+            variant="ghost"
+            size="icon"
+            className="rounded-full hover:bg-gray-100"
           >
             <ArrowLeft className="w-5 h-5" />
-          </Link>
+          </ButtonLink>
           <div>
             <h1 className="text-2xl font-bold text-text-primary">Add New Client</h1>
-            <p className="text-text-secondary text-sm">Create a client profile and start a transaction workflow.</p>
+            <p className="text-sm text-text-secondary mt-1">Create a client profile and start a transaction workflow.</p>
           </div>
         </div>
 
@@ -269,26 +272,22 @@ export default function NewClientPage() {
 
           {/* Submit Action */}
           <div className="flex items-center justify-end gap-4 pt-4">
-            <Link 
+            <ButtonLink 
               href="/clients"
+              variant="secondary"
               className="px-6 py-2.5 text-text-secondary hover:bg-gray-100 rounded-xl font-medium transition-colors"
             >
               Cancel
-            </Link>
-            <button
+            </ButtonLink>
+            <Button
               type="submit"
               disabled={isPending}
-              className="px-8 py-2.5 bg-accent hover:bg-accent-dark text-white rounded-xl font-medium shadow-lg shadow-accent/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              isLoading={isPending}
+              size="lg"
+              className="px-8 shadow-lg shadow-accent/20"
             >
-              {isPending ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  Creating...
-                </>
-              ) : (
-                'Create Client & Start Workflow'
-              )}
-            </button>
+              Create Client & Start Workflow
+            </Button>
           </div>
 
         </form>
@@ -296,4 +295,3 @@ export default function NewClientPage() {
     </AppShell>
   )
 }
-

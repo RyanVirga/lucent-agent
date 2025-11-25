@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Calendar, FileText, CheckCircle2, MessageSquare, Filter } from 'lucide-react'
 import type { ClientTimelineEvent } from '@/types/clients'
+import { Button } from '@/components/ui/Button'
 
 interface ClientTimelineTabProps {
   clientId: string
@@ -13,11 +14,7 @@ export function ClientTimelineTab({ clientId }: ClientTimelineTabProps) {
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState<('milestone' | 'task' | 'note' | 'document')[]>([])
 
-  useEffect(() => {
-    fetchTimeline()
-  }, [clientId, filters])
-
-  const fetchTimeline = async () => {
+  const fetchTimeline = useCallback(async () => {
     try {
       const params = new URLSearchParams()
       if (filters.length > 0) {
@@ -32,7 +29,11 @@ export function ClientTimelineTab({ clientId }: ClientTimelineTabProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [clientId, filters])
+
+  useEffect(() => {
+    fetchTimeline()
+  }, [fetchTimeline])
 
   const toggleFilter = (type: 'milestone' | 'task' | 'note' | 'document') => {
     setFilters(prev =>
@@ -110,17 +111,15 @@ export function ClientTimelineTab({ clientId }: ClientTimelineTabProps) {
         </div>
         <div className="flex flex-wrap gap-2">
           {(['milestone', 'task', 'note', 'document'] as const).map((type) => (
-            <button
+            <Button
               key={type}
               onClick={() => toggleFilter(type)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                filters.includes(type)
-                  ? 'bg-accent text-white'
-                  : 'bg-gray-100 text-text-secondary hover:bg-gray-200'
-              }`}
+              variant={filters.includes(type) ? 'primary' : 'ghost'}
+              size="sm"
+              className={!filters.includes(type) ? 'bg-gray-100' : ''}
             >
               {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -162,4 +161,3 @@ export function ClientTimelineTab({ clientId }: ClientTimelineTabProps) {
     </div>
   )
 }
-

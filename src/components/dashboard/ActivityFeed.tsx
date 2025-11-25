@@ -1,6 +1,7 @@
 'use client'
 
 import { Mail, CheckCircle2, Settings, Play, FileText, ClipboardList, Inbox } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 
 interface TimelineEvent {
   id: string
@@ -78,9 +79,13 @@ export function ActivityFeed({ events }: ActivityFeedProps) {
             })}
             
             {events.length > 10 && (
-              <button className="pl-6 text-sm font-medium text-accent hover:text-accent-dark transition-colors pt-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="pl-6 text-accent hover:text-accent-dark pt-2 justify-start h-auto p-0 hover:bg-transparent"
+              >
                 View all activity →
-              </button>
+              </Button>
             )}
           </div>
         )}

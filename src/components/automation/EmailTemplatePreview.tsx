@@ -3,6 +3,7 @@
 import { Eye, Mail, User, FileText, Code, Edit2, Copy, MoreHorizontal, ArrowLeft, Calendar, Info } from 'lucide-react'
 import { useState } from 'react'
 import type { EmailTemplate } from '@/types/database'
+import { Button } from '@/components/ui/Button'
 
 interface EmailTemplatePreviewProps {
   template: EmailTemplate | null
@@ -40,53 +41,47 @@ export function EmailTemplatePreview({ template, onEdit }: EmailTemplatePreviewP
           <h2 className="text-lg font-semibold text-gray-900">Template Preview</h2>
           <div className="h-4 w-px bg-gray-200" />
           <div className="flex bg-gray-100 p-0.5 rounded-lg">
-            <button
+            <Button
               onClick={() => setViewMode('preview')}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                viewMode === 'preview'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-900'
-              }`}
+              variant={viewMode === 'preview' ? 'secondary' : 'ghost'}
+              size="sm"
+              className={`text-xs ${viewMode === 'preview' ? 'shadow-sm bg-white' : ''}`}
             >
               Visual
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setViewMode('html')}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                viewMode === 'html'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-900'
-              }`}
+              variant={viewMode === 'html' ? 'secondary' : 'ghost'}
+              size="sm"
+              className={`text-xs ${viewMode === 'html' ? 'shadow-sm bg-white' : ''}`}
             >
               HTML
-            </button>
+            </Button>
             {template.body_text && (
-              <button
+              <Button
                 onClick={() => setViewMode('text')}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                  viewMode === 'text'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-900'
-                }`}
+                variant={viewMode === 'text' ? 'secondary' : 'ghost'}
+                size="sm"
+                className={`text-xs ${viewMode === 'text' ? 'shadow-sm bg-white' : ''}`}
               >
                 Text
-              </button>
+              </Button>
             )}
           </div>
         </div>
         
         <div className="flex items-center gap-2">
-          <button className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-200">
+          <Button variant="ghost" size="icon">
             <Copy className="w-4 h-4" />
-          </button>
+          </Button>
           {onEdit && (
-            <button 
+            <Button 
               onClick={() => onEdit(template)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
+              size="sm"
+              leftIcon={<Edit2 className="w-4 h-4" />}
             >
-              <Edit2 className="w-4 h-4" />
               Edit Template
-            </button>
+            </Button>
           )}
         </div>
       </div>
