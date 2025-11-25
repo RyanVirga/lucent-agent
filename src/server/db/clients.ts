@@ -143,7 +143,9 @@ export async function fetchAgentClientsWithDeals(
   const clientsMap = new Map<string, ClientWithDeals>()
 
   for (const ac of agentClients) {
-    const client = ac.clients
+    const clientData = ac.clients
+    const client = Array.isArray(clientData) ? clientData[0] : clientData
+    
     if (!client) continue
 
     const clientDeals = allDeals.filter((deal: any) => {
