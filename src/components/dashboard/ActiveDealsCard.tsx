@@ -1,12 +1,13 @@
 'use client'
 
-import { Home, FileText, BarChart3, Inbox, ChevronRight } from 'lucide-react'
+import { Home, FileText, BarChart3, Inbox, ChevronRight, Building2 } from 'lucide-react'
+import type { DealSide, DealStatus } from '@/types/database'
 
 interface Deal {
   id: string
   property_address: string
-  side: 'buying' | 'listing'
-  status: string
+  side: DealSide
+  status: DealStatus
   coe_date: string | null
   health: 'healthy' | 'warning' | 'critical'
 }
@@ -33,8 +34,17 @@ export function ActiveDealsCard({ deals }: ActiveDealsCardProps) {
     return 'text-gray-700 bg-gray-50 border-gray-200'
   }
 
-  const getSideIcon = (side: string) => {
-    return side === 'buying' ? Home : FileText
+  const getSideIcon = (side: DealSide) => {
+    switch (side) {
+      case 'buying':
+        return Home
+      case 'listing':
+        return FileText
+      case 'landlord':
+      case 'tenant':
+      case 'dual':
+        return Building2
+    }
   }
 
   return (
